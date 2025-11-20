@@ -75,7 +75,7 @@ def main(cfg):
 
     # Copy the original rgb image instead of reconstructing from point cloud
     original_rgb_path = os.path.join(cfg.eval.data_dir, "rgb.png")
-    shutil.copy(original_rgb_path, os.path.join(output_dir, "rgb_image.png"))
+    shutil.copy(original_rgb_path, os.path.join(output_dir, "rgb.png"))
 
     xyz = data['points'].numpy()
     np.save(os.path.join(output_dir, "point_cloud.npy"), xyz)
