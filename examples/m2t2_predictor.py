@@ -65,7 +65,7 @@ def load_and_predict(data_dir, cfg):
     return data, outputs, meta_data
 
 
-@hydra.main(config_path='M2T2', config_name='config', version_base='1.3')
+@hydra.main(config_path='..', config_name='config', version_base='1.3')
 def main(cfg):
     data, outputs, meta_data = load_and_predict(cfg.eval.data_dir, cfg)
 
