@@ -6,6 +6,7 @@ import numpy as np
 import torch
 from PIL import Image
 import os
+import shutil
 
 from m2t2.dataset import load_rgb_xyz, collate
 from m2t2.dataset_utils import denormalize_rgb, sample_points
@@ -72,12 +73,9 @@ def main(cfg):
     output_dir = "M2T2_grasp_outputs"
     os.makedirs(output_dir, exist_ok=True)
 
-    rgb = denormalize_rgb(
-        data['inputs'][:, 3:].T.unsqueeze(2)
-    ).squeeze(2).T
-    rgb_img_np = (rgb.numpy() * 255).astype('uint8')
-    rgb_img = Image.fromarray(rgb_img_np)
-    rgb_img.save(os.path.join(output_dir, "rgb_image.png"))
+    # Copy the original rgb image instead of reconstructing from point cloud
+    original_rgb_path = os.path.join(cfg.eval.data_dir, "rgb.png")
+    shutil.copy(original_rgb_path, os.path.join(output_dir, "rgb_image.png"))
 
     xyz = data['points'].numpy()
     np.save(os.path.join(output_dir, "point_cloud.npy"), xyz)
